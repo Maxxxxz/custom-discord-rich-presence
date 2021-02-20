@@ -1,4 +1,5 @@
 #include "cMain.h"
+#include "discord.h"
 
 wxBEGIN_EVENT_TABLE(cMain, wxFrame)
 	EVT_BUTTON(10001, onButtonClicked)
@@ -9,6 +10,8 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "wxTemplate!", wxPoint(100, 100), wx
 	m_btn1 = new wxButton(this, 10001, "Click Me!", wxPoint(25, 25), wxSize(100, 25));
 	m_text1 = new wxTextCtrl(this, wxID_ANY, "", wxPoint(25, 75), wxSize(250, 100));
 	m_list1 = new wxListBox(this, wxID_ANY, wxPoint(25, 200), wxSize(250, 100));
+
+	initDiscord();
 }
 
 cMain::~cMain()
@@ -18,6 +21,7 @@ cMain::~cMain()
 
 void cMain::onButtonClicked(wxCommandEvent& e)
 {
-	m_list1->AppendString(m_text1->GetValue());
+	//m_list1->AppendString(m_text1->GetValue());
+	updatePresence();
 	e.Skip();
 }
