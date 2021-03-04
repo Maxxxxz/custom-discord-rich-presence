@@ -20,25 +20,45 @@
 #include <string>
 #include <time.h>
 #include "discord.h"
+#include <vector>
 
 static const char* ID = "812733500889104444";
 
 static int64_t start;
+static int64_t end;
 
-void updatePresence(std::string state = "state", std::string details = "details")
+using std::string;
+using std::vector;
+
+void updatePresence(vector<string> strings)
 {
-	start = time(0);
+	//start = time(0);
+	start = strtoll(strings[2].c_str(), NULL, 10);
+	end = strtoll(strings[3].c_str(), NULL, 10);
+
 	DiscordRichPresence pres;
 	memset(&pres, 0, sizeof(pres));
 
-	pres.state = state.c_str();
-	pres.details = details.c_str();
-	pres.startTimestamp = start;
-	//end timestamp
+	pres.state = strings[0].c_str();
+	pres.details = strings[1].c_str();
+	if (start >= end)
+	{	// Use start; it is newer
+		pres.startTimestamp = start;
+	}
+	else
+	{	// Use end; it is in the future
+		pres.endTimestamp = end;
+	}
 	//large image key
+	//pres.largeImageKey = "c";
+	pres.largeImageText = "Large Test";
 	//small image key
+	//pres.smallImageKey = "r";
+	pres.smallImageText = "Small Test";
 	//party id
+	pres.partySize = stoi(strings[4]);
 	//party size
+	pres.partyMax = stoi(strings[5]);
 	//party max
 	//party privacy
 	//match secret
